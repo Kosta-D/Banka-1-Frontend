@@ -89,4 +89,42 @@ export class EmployeeListComponent implements OnInit {
   trackById(index: number, employee: Employee): number {
     return employee.id;
   }
+  selectedEmployeeForEdit: Employee | null = null;
+  isEditModalOpen: boolean = false;
+
+  /**
+   * Otvara modal za izmenu i prosleđuje izabranog zaposlenog.
+   * @param id ID zaposlenog koji se menja
+   */
+  editEmployee(id: number): void {
+    const emp = this.employees.find(e => e.id === id);
+    if (emp) {
+      this.selectedEmployeeForEdit = emp;
+      this.isEditModalOpen = true;
+    }
+  }
+
+  /**
+   * Zatvara modal.
+   */
+  closeEditModal(): void {
+    this.isEditModalOpen = false;
+    this.selectedEmployeeForEdit = null;
+  }
+
+  /**
+   * Ažurira listu sa novim podacima sačuvanim u modalu.
+   * @param updatedEmployee Ažurirani objekat zaposlenog
+   */
+  onEmployeeSaved(updatedEmployee: Employee): void {
+    // TODO: Ovde pozvati servis za backend (this.employeeService.update(...))
+
+    const index = this.employees.findIndex(e => e.id === updatedEmployee.id);
+    if (index !== -1) {
+      this.employees[index] = updatedEmployee;
+      this.applyFilters(); // Obezbeđuje da se tabela odmah osveži
+    }
+    this.closeEditModal();
+  }
+
 }

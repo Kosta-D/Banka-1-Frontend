@@ -1,0 +1,60 @@
+<div class="modal-overlay">
+  <div class="modal-card">
+    <h2 class="modal-title">Edit employee</h2>
+
+    <div class="form-group">
+      <label>Full name:</label>
+      <input type="text" [(ngModel)]="editFullName" class="modal-input">
+    </div>
+
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="editingEmployee.email" class="modal-input">
+    </div>
+
+    <div class="form-group">
+      <label>Role:</label>
+      <select [(ngModel)]="editingEmployee.role" class="modal-input select-icon">
+        <option value="Regular employee">Regular employee</option>
+        <option value="Admin">Admin</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Status:</label>
+      <select [ngModel]="editingEmployee.status ? 'Active' : 'Inactive'" 
+              (ngModelChange)="editingEmployee.status = $event === 'Active'" 
+              class="modal-input select-icon">
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Permissions:</label>
+      <div class="permissions-grid">
+        <label class="checkbox-label">
+          <input type="checkbox" [checked]="editingEmployee.permissions.includes('Create')" (change)="togglePermission('Create', $event)">
+          <span class="custom-checkbox"></span> Create
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" [checked]="editingEmployee.permissions.includes('Edit')" (change)="togglePermission('Edit', $event)">
+          <span class="custom-checkbox"></span> Edit
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" [checked]="editingEmployee.permissions.includes('Delete')" (change)="togglePermission('Delete', $event)">
+          <span class="custom-checkbox"></span> Delete
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" [checked]="editingEmployee.permissions.includes('View')" (change)="togglePermission('View', $event)">
+          <span class="custom-checkbox"></span> View
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-save" (click)="onSave()">Save changes</button>
+      <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</div>
